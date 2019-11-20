@@ -27,7 +27,9 @@ public class RecyclerViewAdapterListAlarms extends RecyclerView.Adapter<Recycler
 
     @Override
     public RecyclerViewHolderListAlarms onCreateViewHolder(ViewGroup parent, int viewType) {
-        View cellView = inflate.inflate(R.layout.list_alarm, parent, false);
+
+
+        View cellView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_alarm, parent, false);
         return new RecyclerViewHolderListAlarms (cellView);
     }
 

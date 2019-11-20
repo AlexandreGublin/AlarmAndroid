@@ -48,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         // Get the list of Alarm
         alarms = SharedPreferencesService.getAlarms(this);
 
+        Alarm alarm = new Alarm();
+        alarm.setName("test");
+        alarm.setId(05);
+        alarms.add(alarm);
+
         // Init adapter with list Alarms and the layout
         adapter = new RecyclerViewAdapterListAlarms(alarms, this.getLayoutInflater());
 
@@ -92,5 +97,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+
     }
+
+
+
 }

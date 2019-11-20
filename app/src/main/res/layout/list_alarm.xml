@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:checked="true"
-            android:thumbTint="@android:color/black"
+            android:thumbTint="@color/black"
 
             />
 
@@ -52,10 +52,10 @@
 
     </RelativeLayout>
 
-    <view
+    <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/black"
+        android:background="@color/black"
         />
 
 
