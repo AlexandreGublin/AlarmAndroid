@@ -4,4 +4,7 @@
     <string name="label_name_add_alarm">Nom de l\'alarme : </string>
     <string name="submit_add_alarm">Sauvegarder</string>
     <string name="cancel">Annuler</string>
+
+    <string name="notification_title">Title</string>
+    <string name="notification_text">text</string>
     </resources>

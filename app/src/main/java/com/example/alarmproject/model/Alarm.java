@@ -3,6 +3,7 @@ package com.example.alarmproject.model;
 import com.example.alarmproject.utils.Day;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Alarm implements Serializable {
     private Integer id;
     private String name;
     private Boolean isActive;
-    private Date hour;
+    private Calendar hour;
     private List<Day> days;
 
     public Integer getId() {
@@ -38,11 +39,11 @@ public class Alarm implements Serializable {
         isActive = active;
     }
 
-    public Date getHour() {
+    public Calendar getHour() {
         return hour;
     }
 
-    public void setHour(Date hour) {
+    public void setHour(Calendar hour) {
         this.hour = hour;
     }
 

@@ -31,7 +31,7 @@ public class CreateAlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_alarm);
 
         // Instance and start a listener on submit
-        btnSaveAlarm = findViewById(R.id.btn_add_alarm);
+        btnSaveAlarm = findViewById(R.id.submit_add_alarm);
         btnSaveAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,9 +53,6 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 alarm.setActive(true);
                 alarm.setName(nameAlarm.getText().toString());
                 alarm.setHour(Util.convertStringToDate(hour + ":" + minute));
-
-                // TODO If can't save just one alarm : get all alarms and save them all OR pass alarm in intent and save in MainActivity
-//                SharedPreferencesService.setAlarm(alarm);
 
                 notifyAddAlarmFinished(true, alarm);
             }

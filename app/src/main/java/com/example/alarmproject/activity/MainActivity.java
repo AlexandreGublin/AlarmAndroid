@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.alarmproject.R;
 import com.example.alarmproject.adapter.RecyclerViewAdapterListAlarms;
+import com.example.alarmproject.controller.AlarmController;
 import com.example.alarmproject.model.Alarm;
 import com.example.alarmproject.services.SharedPreferencesService;
 import com.example.alarmproject.utils.RecyclerItemClickListener;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOGTAG = MainActivity.class.getName();
 
     FloatingActionButton buttonPlus;
-    final static int CODE_INTENT = 007;
+    final static int CODE_INTENT_ADD_ALARM = 007;
     List<Alarm> alarms;
     RecyclerViewAdapterListAlarms adapter;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
-                startActivityForResult(intent, CODE_INTENT);
+                startActivityForResult(intent, CODE_INTENT_ADD_ALARM);
             }
         });
 
@@ -74,20 +75,22 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // If receive result of intent add alarm and it is success
-        if(requestCode == CODE_INTENT && resultCode == Activity.RESULT_OK){
+        if(requestCode == CODE_INTENT_ADD_ALARM && resultCode == Activity.RESULT_OK){
 
             if (data != null) {
                 try {
                     // Retrieve and save the alarm
-                    alarms.add((Alarm)data.getSerializableExtra(CreateAlarmActivity.ADD_ALARM_CODE));
-                    SharedPreferencesService.setAlarms(alarms);
+                    Alarm alarm = (Alarm) data.getSerializableExtra(CreateAlarmActivity.ADD_ALARM_CODE);
+                    alarms.add(alarm);
+                    SharedPreferencesService.setAlarms(this, alarms);
+                    AlarmController.activeAlarm(this, alarm);
+
+                    // Update recycler view
+                    adapter.notifyDataSetChanged();
                 }catch (Exception e){
                     Log.e(LOGTAG + " | onActivityResult()", e.toString());
                 }
             }
-
-            // Update recycler view
-            adapter.notifyDataSetChanged();
         }
     }
 }
