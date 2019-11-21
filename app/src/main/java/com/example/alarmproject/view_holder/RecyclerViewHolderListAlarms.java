@@ -24,6 +24,10 @@ public class RecyclerViewHolderListAlarms extends RecyclerView.ViewHolder{
     // Active cell
     private Switch getSwitchIsActive(){ return itemView.findViewById(R.id.switch_is_active); }
     public void setSwitchIsActive(Boolean isActive) {
-        getSwitchIsActive().setChecked(isActive);
+        if(isActive){
+            getSwitchIsActive().setChecked(true);
+        }else{
+            getSwitchIsActive().setChecked(false);
+        }
     }
 }

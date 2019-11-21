@@ -19,6 +19,7 @@ import com.example.alarmproject.services.SharedPreferencesService;
 import com.example.alarmproject.utils.RecyclerItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton buttonPlus;
     final static int CODE_INTENT_ADD_ALARM = 007;
-    List<Alarm> alarms;
+    List<Alarm> alarms = new ArrayList<>();
     RecyclerViewAdapterListAlarms adapter;
 
     @Override
@@ -47,11 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the list of Alarm
         alarms = SharedPreferencesService.getAlarms(this);
-
-        Alarm alarm = new Alarm();
-        alarm.setName("test");
-        alarm.setId(05);
-        alarms.add(alarm);
 
         // Init adapter with list Alarms and the layout
         adapter = new RecyclerViewAdapterListAlarms(alarms, this.getLayoutInflater());
@@ -73,6 +69,31 @@ public class MainActivity extends AppCompatActivity {
         // Set adapter in RV
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+    }
+
+
+    private void deleteAlarm(Alarm alarm){
+        // Desactive alarm
+        AlarmController.desactiveAlarm(this, alarm);
+
+        // Delete alarm from list
+        alarms.remove(alarm);
+
+        // Update sharedPreferences
+        SharedPreferencesService.setAlarms(this, alarms);
+
+        // Update view
+        adapter.notifyDataSetChanged();
+    }
+
+    public void desactiveAlarm(Alarm alarm){
+        // Desactive alarm
+        AlarmController.desactiveAlarm(this, alarm);
+
+        // Update sharedPreferences
+        SharedPreferencesService.setAlarms(this, alarms);
+
+        // No need to update view, the switch has changer when user had click on it
     }
 
     @Override
@@ -97,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-
     }
 
 

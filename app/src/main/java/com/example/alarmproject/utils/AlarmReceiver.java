@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.alarmproject.R;
+import com.example.alarmproject.activity.AlarmActivity;
 import com.example.alarmproject.activity.MainActivity;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -30,6 +31,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 //                (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Log.i("AlarmReceiver", "test");
+
+        // Get idAlarm
+
+
+        Intent intent2 = new Intent(context, AlarmActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent2);
 
 //        //Build the notification
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)

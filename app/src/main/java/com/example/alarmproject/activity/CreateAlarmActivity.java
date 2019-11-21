@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,9 @@ import com.example.alarmproject.R;
 import com.example.alarmproject.model.Alarm;
 import com.example.alarmproject.services.SharedPreferencesService;
 import com.example.alarmproject.utils.Util;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CreateAlarmActivity extends AppCompatActivity {
 
@@ -43,14 +47,13 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 // TODO Check what we get from input
                 int hour = timePicker.getHour();
                 int minute = timePicker.getMinute();
-                String test = nameAlarm.getText().toString();
 
-                // Check if all is ok
-//                if()
+                // Can had condition
 
                 // Put data inputs in new object Alarm
                 Alarm alarm = new Alarm();
                 alarm.setActive(true);
+                alarm.setId(Integer.valueOf(new SimpleDateFormat("Hmmss").format(new Date())));
                 alarm.setName(nameAlarm.getText().toString());
                 alarm.setHour(Util.convertStringToDate(hour + ":" + minute));
 
@@ -67,6 +70,7 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 notifyAddAlarmFinished(false, null);
             }
         });
+
     }
 
     private void notifyAddAlarmFinished(Boolean isSuccess, Alarm alarm){

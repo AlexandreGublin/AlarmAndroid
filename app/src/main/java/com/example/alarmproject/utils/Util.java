@@ -19,9 +19,8 @@ public class Util {
         try {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm");
             strDate = dateFormat.format(calendar.getTime());
-            Log.i("hello", strDate);
         } catch (Exception e) {
-            Log.e(LOGTAG + "convertDate", e.toString());
+            Log.e(LOGTAG + " | convertDate", e.toString());
         }
 
         return strDate;
@@ -35,7 +34,7 @@ public class Util {
         try {
             date = sdf.parse(time);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.e(LOGTAG + " | convertStringToDate", e.toString());
         }
         cal.setTime(date);
 
