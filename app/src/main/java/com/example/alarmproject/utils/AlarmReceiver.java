@@ -12,45 +12,43 @@ import androidx.core.app.NotificationCompat;
 import com.example.alarmproject.R;
 import com.example.alarmproject.activity.AlarmActivity;
 import com.example.alarmproject.activity.MainActivity;
+import com.example.alarmproject.controller.AlarmController;
+import com.example.alarmproject.model.Alarm;
 
 public class AlarmReceiver extends BroadcastReceiver {
-
-    private static final int NOTIFICATION_ID = 0;
-
+    private final static String LOGTAG = AlarmReceiver.class.getName();
 
     public AlarmReceiver() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-//        //Create the content intent for the notification, which launches this activity
-//        Intent contentIntent = new Intent(context, MainActivity.class);
-//        PendingIntent contentPendingIntent = PendingIntent.getActivity
-//                (context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         Log.i("AlarmReceiver", "test");
 
-        // Get idAlarm
 
+        try {
+            // Get idAlarm
+            if(intent.getData() != null){
+//                Alarm alarm = new Alarm();
+//                alarm.setId(intent.getIntExtra(AlarmController.TAG_ID_ALARM, 0));
 
-        Intent intent2 = new Intent(context, AlarmActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent2);
+                // Get List<Alarm> from shared preferences
 
-//        //Build the notification
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-////                .setSmallIcon(R.drawable.ic_stand_up)
-//                .setContentTitle(context.getString(R.string.notification_title))
-//                .setContentText(context.getString(R.string.notification_text))
-//                .setContentIntent(contentPendingIntent)
-//                .setAutoCancel(true)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setDefaults(NotificationCompat.DEFAULT_ALL);
-//
-//        //Deliver the notification
-//        notificationManager.notify(NOTIFICATION_ID, builder.build());
+                // Find alarm by id in list
+
+                // put isActive = false to alarm
+
+                // Save list<Alarm> in sharedPreferences
+            }
+
+            // Show page
+            Intent intent2 = new Intent(context, AlarmActivity.class);
+            intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent2);
+
+        }catch (Exception e){
+            Log.e(LOGTAG + " onReceive()", e.toString());
+        }
     }
 
 }

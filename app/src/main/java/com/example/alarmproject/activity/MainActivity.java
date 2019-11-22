@@ -2,6 +2,8 @@ package com.example.alarmproject.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 
 import com.example.alarmproject.R;
 import com.example.alarmproject.adapter.RecyclerViewAdapterListAlarms;
@@ -57,12 +60,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                alarms.get(position).getId()
+                if (view instanceof AppCompatImageButton) {
+                    Alarm alarm = alarms.get(position);
+                    deleteAlarm(alarm);
+                } else if(view instanceof Switch) {
+                    Alarm alarm = alarms.get(position);
+                    desactiveAlarm(alarm);
+                }
+
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-//                alarms.get(position).getId()
             }
         }));
 
@@ -73,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void deleteAlarm(Alarm alarm){
-        // Desactive alarm
-        AlarmController.desactiveAlarm(this, alarm);
+        if(alarm.getActive()) AlarmController.desactiveAlarm(this, alarm);// Desactive alarm
+
 
         // Delete alarm from list
         alarms.remove(alarm);
@@ -87,13 +96,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void desactiveAlarm(Alarm alarm){
-        // Desactive alarm
-        AlarmController.desactiveAlarm(this, alarm);
+        if(alarm.getActive()){
+            alarm.setActive(false);
 
-        // Update sharedPreferences
-        SharedPreferencesService.setAlarms(this, alarms);
+            // Desactive alarm
+            AlarmController.desactiveAlarm(this, alarm);
 
-        // No need to update view, the switch has changer when user had click on it
+            // Update sharedPreferences
+            SharedPreferencesService.setAlarms(this, alarms);
+
+            // No need to update view, the switch has changer when user had click on it
+        }
     }
 
     @Override

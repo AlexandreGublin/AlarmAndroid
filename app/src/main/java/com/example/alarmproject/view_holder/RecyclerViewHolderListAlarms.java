@@ -1,6 +1,7 @@
 package com.example.alarmproject.view_holder;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -9,9 +10,12 @@ import com.example.alarmproject.R;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewHolderListAlarms extends RecyclerView.ViewHolder{
-    public RecyclerViewHolderListAlarms (View itemView) {
-        super(itemView);
-    }
+
+    private ImageButton deleteAlarm;
+
+    public RecyclerViewHolderListAlarms (final View itemView) { super(itemView); }
+
+
 
     // Time cell
     private TextView getTextViewTime() { return itemView.findViewById(R.id.text_time); }

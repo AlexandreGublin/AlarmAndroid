@@ -56,7 +56,6 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 alarm.setId(Integer.valueOf(new SimpleDateFormat("Hmmss").format(new Date())));
                 alarm.setName(nameAlarm.getText().toString());
                 alarm.setHour(Util.convertStringToDate(hour + ":" + minute));
-
                 notifyAddAlarmFinished(true, alarm);
             }
         });
