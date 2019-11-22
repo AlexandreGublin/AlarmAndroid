@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.CreateAlarmActivity"></activity>
         <activity android:name=".activity.AlarmActivity"></activity>
+        <activity android:name=".activity.EditAlarmActivity"></activity>
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>

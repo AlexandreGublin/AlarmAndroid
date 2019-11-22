@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton buttonPlus;
     final static int CODE_INTENT_ADD_ALARM = 007;
+    final static int CODE_INTENT_EDIT_ALARM = 214;
+
     List<Alarm> alarms = new ArrayList<>();
     RecyclerViewAdapterListAlarms adapter;
 
@@ -44,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         buttonPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
-                startActivityForResult(intent, CODE_INTENT_ADD_ALARM);
+                startActivityForResult(new Intent(getApplicationContext(), CreateAlarmActivity.class), CODE_INTENT_ADD_ALARM);
             }
         });
 
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 if (view instanceof AppCompatImageButton) {
                     Alarm alarm = alarms.get(position);
-                    deleteAlarm(alarm);
+                    if(view.getId() == R.id.img_btn_trash) deleteAlarm(alarm);
+                    if(view.getId() == R.id.img_btn_update) startActivityForResult(new Intent(getApplicationContext(), EditAlarmActivity.class).putExtra(EditAlarmActivity.EDIT_ALARM_CODE, alarm), CODE_INTENT_EDIT_ALARM);
+
                 } else if(view instanceof Switch) {
                     Alarm alarm = alarms.get(position);
                     desactiveAlarm(alarm);
@@ -83,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void deleteAlarm(Alarm alarm){
         if(alarm.getActive()) AlarmController.desactiveAlarm(this, alarm);// Desactive alarm
-
 
         // Delete alarm from list
         alarms.remove(alarm);
@@ -123,6 +125,27 @@ public class MainActivity extends AppCompatActivity {
                     alarms.add(alarm);
                     SharedPreferencesService.setAlarms(this, alarms);
                     AlarmController.activeAlarm(this, alarm);
+
+                    // Update recycler view
+                    adapter.notifyDataSetChanged();
+                }catch (Exception e){
+                    Log.e(LOGTAG + " | onActivityResult()", e.toString());
+                }
+            }
+        }
+
+        if(requestCode == CODE_INTENT_EDIT_ALARM && resultCode == Activity.RESULT_OK){
+
+            if (data != null) {
+                try {
+                    // Retrieve and save the alarm
+                    Alarm alarm = (Alarm) data.getSerializableExtra(EditAlarmActivity.EDIT_ALARM_CODE);
+                    alarms.add(alarms.indexOf(alarm), alarm);
+
+                    if (alarm.getActive()) {
+                        AlarmController.activeAlarm(this, alarm);
+                    }
+                    SharedPreferencesService.setAlarms(this, alarms);
 
                     // Update recycler view
                     adapter.notifyDataSetChanged();

@@ -5,6 +5,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -39,6 +42,20 @@ public class AlarmReceiver extends BroadcastReceiver {
                 // put isActive = false to alarm
 
                 // Save list<Alarm> in sharedPreferences
+            }
+
+            //this will update the UI with message
+//            //this will send a notification message
+//            ComponentName comp = new ComponentName(context.getPackageName(),
+//                    AlarmService.class.getName());
+//            startWakefulService(context, (intent.setComponent(comp)));
+//            setResultCode(Activity.RESULT_OK);
+
+            Uri ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Ringtone ringtoneSound = RingtoneManager.getRingtone(context, ringtoneUri);
+
+            if (ringtoneSound != null) {
+                ringtoneSound.play();
             }
 
             // Show page
